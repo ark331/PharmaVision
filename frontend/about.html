@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}">
+    <link rel="script" href="./static/main.js">
+    <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+    <title>PharmaVision | About</title>
+</head>
+<body>
+    <div id="preloader"></div>
+
+    <div class="hero">
+      <div class="navbar-box">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="/index">PharmaVision</a>
+          </div>
+          <div class="navlinks">
+            <a href="/index" class="navlink">Home</a>
+            <a href="/about" class="navlink">About Us</a>
+            <a href="/product" class="navlink">Products</a>
+            <a href="/contact" class="navlink">Contact</a>
+            <a href="/model" class="navlink">Model</a>
+          </div>
+
+        </nav>
+      </div>
+
+      <section class="about-section">
+        <h2>About Us</h2>
+        <p>
+            Welcome to our company! We are dedicated to providing top-notch services and products that exceed our customers' expectations. Our team is passionate about innovation and excellence, working tirelessly to deliver solutions that make a difference. 
+            <br><br>
+            Our journey began in an inspiring and transformative experience at a prominent hackathon. It was here, surrounded by brilliant minds and driven by a shared passion for technology, that the idea for this product was born. During the hackathon, we tackled a complex problem and crafted a creative solution that sparked our enthusiasm and vision.
+            <br><br>
+            The collaborative environment and the challenge of the hackathon pushed us to think outside the box and explore innovative approaches. The energy and creativity of the event were contagious, and it was clear that we had stumbled upon something special. From this experience, our initial concept evolved into a full-fledged project, driven by our commitment to making a meaningful impact.
+            <br><br>  
+            <br><br>
+
+            <div class="img-container">
+                <img src="{{url_for ('static', filename='img/model.png')}}" alt="Our Team" class="about-img">
+                <div class="info-overlay">
+                    <h3>Abdul Rehman Khams</h3>
+                    <p>Founder & CEO</p>
+                </div>
+            </div>
+            <br><br>
+            
+        </p>
+    </section>
+    
+</body>
+<script>
+  var loader = document.getElementById("preloader");
+      setTimeout(function(){
+        loader.style.display = "none";
+      }, timeout=2000);
+</script>
