@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaVision | Contact Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}"/>
+    <link rel="script" href="{{ url_for('static', filename='/main.js') }}">
+    <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+</head>
+<body>
+    <div id="preloader"></div>
+
+    <div class="hero">
+      <div class="navbar-box">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="/index">PharmaVision</a>
+          </div>
+          <div class="navlinks">
+            <a href="/index" class="navlink">Home</a>
+            <a href="/about" class="navlink">About Us</a>
+            <a href="/product" class="navlink">Products</a>
+            <a href="/contact" class="navlink">Contact</a>
+            <a href="/model" class="navlink">Model</a>
+          </div>
+
+        </nav>
+      </div>
+
+      <div class="contact-container">
+        <h2>Contact Us</h2>
+        <form class="contact-form" action="/submit_form" method="POST">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" placeholder="Enter your message" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+        <div class="contact-info">
+            <p>Email: arkhams312@gmail.com</p>
+            <p>Phone: +91 7718041204</p>
+            <p>Linkedin</p>
+            <!-- <div>
+                <p>Email: arkhams312@gmail.com</p>
+                <p>Phone: +91 7718041204</p>
+                <p>Linkedin</p>
+            </div> -->
+        </div>
+    </div>
+
+</body>
+<script>
+    var loader = document.getElementById("preloader");
+        setTimeout(function(){
+          loader.style.display = "none";
+        }, timeout=2000);
+  </script>
+</html>
