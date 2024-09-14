@@ -12,31 +12,41 @@ API_KEY = os.environ.get('ROBOFLOW_API_KEY')
 print(API_KEY)
 
 
-def get_drug_info():
-    url = "https://drug-info-and-price-history.p.rapidapi.com/1/druginfo"
+def get_drug_info(query):
+    url = f"https://drugapi.p.rapidapi.com/Drug/Summary/{query}"
 
     headers = {
-        "X-RapidAPI-Key": "709f237765msh727d254c3e1eab7p1174c0jsn520d034e4002",
-        "X-RapidAPI-Host": "drug-info-and-price-history.p.rapidapi.com"
+    	"x-rapidapi-key": "5d53f0c48bmsh7b773967c027048p1e9882jsn9dd54bf50d87",
+    	"x-rapidapi-host": "drugapi.p.rapidapi.com"
     }
 
-    response = requests.get(url, headers=headers, params={"drug": 'query_string'})
 
+    response = requests.get(url, headers=headers)
     if response.status_code == 200:
         data = response.json()
         pprint(data)
     else:
         print(f"Request for drug info failed with status code {response.status_code}")
 
-# get_drug_info()
 # 
 def predict_pill(img_path_or_url):
     rf = Roboflow(api_key=API_KEY)
-    project = rf.workspace().project("pill-detection-llp4r")
-    model = project.version(3).model
+    project = rf.workspace().project("pill-recognition-oxvel")
+    model = project.version(1).model
+    if model is None:
+        print("Model failed to load.")
+    else:
+        print("Model loaded successfully.")
 
+    print(f"Model: {model}")
+    print(f"Image Path: {img_path_or_url}")
     # infer on an image hosted elsewhere
-    return model.predict(image_path=img_path_or_url, confidence=40, overlap=30).json()
+    if model:
+        result = model.predict(image_path=img_path_or_url, confidence=40, overlap=30).json()
+        result.update({"info": get_drug_info(result['predictions'][0]['class'])})
+    else:
+        print("Model is None, cannot predict.")
+    return None
 
 
 
@@ -53,3 +63,5 @@ def image_with_bboxes(frame: Union[Path, cv2.Mat], face_data: List[dict]) -> cv2
         cv2.rectangle(image, (left, top), (right, bottom), (0,255,0), 2)
 
     return image
+
+pprint(predict_pill("PharmaVision-master\\uploads\\eliquis.jpg"), indent=4)
