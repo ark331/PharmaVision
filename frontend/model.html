@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaVision</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}"/>
+    <link rel="script" href="{{ url_for('static', filename='/main.js') }}">
+    <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+</head>
+<body>
+    <div id="preloader"></div>
+
+    <div class="hero">
+      <div class="navbar-box">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="/index">PharmaVision</a>
+          </div>
+          <div class="navlinks">
+            <a href="/index" class="navlink">Home</a>
+            <a href="/about" class="navlink">About Us</a>
+            <a href="/product" class="navlink">Products</a>
+            <a href="/contact" class="navlink">Contact</a>
+            <a href="/model" class="navlink">Model</a>
+          </div>
+
+        </nav>
+      </div>
+
+      <div class="page3">
+        
+
+        <div class="checkup">
+          <div class="check">
+            <img src="{{ url_for('static', filename='img/page3.png')}}'" alt="" />
+          </div>
+          <div class="check">
+            <h1>Search Medicine</h1>
+            <br />
+
+            
+            <br />
+            <p>
+              Experience hassle-free medication management with our dedicated
+              services. Let us handle your medicines, ensuring you receive the
+              care and attention your health deserves.
+            </p><br>
+            <div class="checkbutton">
+              <a href="">Read More ↠</a>
+            </div><br>
+            <div class="search-cont">
+              <input type="text" placeholder="Search..." class="search-in" id="search-input">
+              <button class="search-button" onclick="" >
+                  <img src="{{url_for('static',filename='/img/search.png')}}" alt="Search">
+              </button>
+              
+            </div>
+            <div class="search-cont">
+              <ul id="suggestions-list"></ul>
+            </div>
+            <div class="results" id="results"></div>
+            
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="file-upload-container">
+              <div class="file-dropzone" id="dropzone">
+                <p>Drag & Drop files here or click to upload</p>
+                <input type="file" id="fileInput" name="files" multiple hidden>
+              </div>
+              <div id="fileList"></div>
+              <div id="filePreviews"></div>
+              <button type="submit" id="uploadButton" action="/upload" disabled>Upload</button>
+              <button id="clearButton" type="button" disabled>Clear</button>
+            </div>
+            </form>
+</body>
+
+<script>
+    var loader = document.getElementById("preloader");
+      setTimeout(function(){
+        loader.style.display = "none";
+      }, timeout=2000);
+
+      const drugNames = [
+        "Aspirin", "Ibuprofen", "Paracetamol", "Metformin", "Amoxicillin",
+        "Atorvastatin", "Lisinopril", "Levothyroxine", "Azithromycin",
+        "Hydrochlorothiazide", "Amlodipine", "Simvastatin", "Albuterol",
+        "Metoprolol", "Omeprazole"
+    ];
+
+    const searchInput = document.getElementById("search-input");
+    const suggestionsList = document.getElementById("suggestions-list");
+
+    function generateSuggestions(input) {
+        const suggestions = [];
+        const inputData = input.toLowerCase();
+
+        // Filter the drug names based on the input
+        drugNames.forEach(drug => {
+            if (drug.toLowerCase().includes(inputData) && !suggestions.includes(drug)) {
+                suggestions.push(drug);
+            }
+        });
+
+        // Map the suggestions to HTML list items
+        const listItems = suggestions.map(drug => `<li>${drug}</li>`);
+
+        // Add the suggestions to the list
+        suggestionsList.innerHTML = listItems.join("");
+    }
+
+    // Adding event listener
+    searchInput.addEventListener("input", () => {
+        const input = searchInput.value.trim();
+        if (input !== "") {
+            generateSuggestions(input);
+        } else {
+            suggestionsList.innerHTML = "";
+        }
+    });
+
+    suggestionsList.addEventListener("click", (e) => {
+        if (e.target.tagName === "LI") {
+            searchInput.value = e.target.textContent;  // Fill input with clicked suggestion
+            suggestionsList.innerHTML = "";  // Clear suggestion list
+        }
+    });
+
+    const resultsContainer = document.getElementById('results');
+
+    
+    // Drag 
+    const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const fileList = document.getElementById('fileList');
+const filePreviews = document.getElementById('filePreviews');
+const uploadButton = document.getElementById('uploadButton');
+const clearButton = document.getElementById('clearButton');
+
+dropzone.addEventListener('click', () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener('change', (event) => {
+  handleFiles(event.target.files);
+});
+
+dropzone.addEventListener('dragover', (event) => {
+  event.preventDefault();
+  dropzone.classList.add('drag-over');
+});
+
+dropzone.addEventListener('dragleave', () => {
+  dropzone.classList.remove('drag-over');
+});
+
+dropzone.addEventListener('drop', (event) => {
+  event.preventDefault();
+  dropzone.classList.remove('drag-over');
+  handleFiles(event.dataTransfer.files);
+});
+
+function handleFiles(files) {
+  const fileArray = Array.from(files);
+  const fileItems = fileArray.map(file => `<li>${file.name}</li>`);
+  fileList.innerHTML = `<ul>${fileItems.join('')}</ul>`;
+
+  // Update button state
+  if (fileArray.length > 0) {
+    uploadButton.disabled = false;
+    clearButton.disabled = false; // Enable clear button if files are present
+  } else {
+    uploadButton.disabled = true;
+    clearButton.disabled = true; // Disable clear button if no files
+  }
+
+  filePreviews.innerHTML = '';
+
+  fileArray.forEach(file => {
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+      const result = event.target.result;
+      let preview;
+
+      if (file.type.startsWith('image/')) {
+        preview = `<img src="${result}" alt="${file.name}">`;
+      } else if (file.type.startsWith('video/')) {
+        preview = `<video controls><source src="${result}" type="${file.type}"></video>`;
+      } else {
+        preview = `<p>Preview not available for ${file.name}</p>`;
+      }
+
+      filePreviews.innerHTML += preview;
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+clearButton.addEventListener('click', () => {
+  fileInput.value = ''; // Clear file input
+  fileList.innerHTML = ''; // Clear file list
+  filePreviews.innerHTML = ''; // Clear previews
+  uploadButton.disabled = true; // Disable upload button
+  clearButton.disabled = true; // Disable clear button
+});
+
+const uploadForm = document.getElementById('uploadForm');
+uploadButton.addEventListener('click', () => {
+    uploadForm.submit();
+});
+
+
+      
+
+</script>
+</html>
