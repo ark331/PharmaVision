@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaVision | Product Detail</title>
+    <link rel="stylesheet" href="./static/styles.css">
+    <link rel="script" href="./static/main.js">
+    <link rel="icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+
+
+</head>
+<body>
+    <div id="preloader"></div>
+
+    <div class="hero">
+      <div class="navbar-box">
+        <nav class="navbar">
+          <div class="logo">
+            <a href="#">PharmaVision</a>
+          </div>
+          <div class="navlinks">
+            <a href="/index" class="navlink">Home</a>
+            <a href="/about" class="navlink">About Us</a>
+            <a href="/product" class="navlink">Products</a>
+            <a href="/contact" class="navlink">Contact</a>
+            <a href="/model" class="navlink">Model</a>
+          </div>
+
+        </nav>
+      </div>
+      <div class="page2">
+        <div class="services">
+          <h1>Product Features</h1>
+          <br /><br />
+
+          <div class="serviceCards">
+            <div class="card">
+              <img src="{{ url_for('static', filename='img/detection.png')}}" width="100px" alt="" />
+              <br /><br />
+
+              <h2>Detection</h2>
+              <br /><br />
+              <p>
+                AI can help detect and diagnose diseases like cancer,
+                cardiovascular issues, respiratory conditions, neurological
+                disorders, and infectious diseases by analyzing medical images
+                and patient data. However, it's crucial to remember that AI is a
+                supportive tool for healthcare professionals and should not
+                replace proper medical diagnosis. Consultation with a qualified
+                healthcare provider is essential for accurate diagnosis and
+                treatment.
+              </p>
+            </div>
+            <div class="card">
+              <img src="{{ url_for('static', filename='img/side-effect.png')}}" width="250px" alt="" />
+              <br /><br />
+              <h2>Side Effects</h2>
+              <br /><br />
+
+              <p>
+                The advanced medicine detection and information retrieval
+                system, being technology-based, doesn't have inherent side
+                effects. However, it's crucial to recognize that any medication
+                identified by the system may have its own potential side
+                effects, specific to that medication. For accurate information
+                on side effects, it is advisable to consult with a healthcare
+                professional or refer to the medication's official
+                documentation.
+              </p>
+            </div>
+            <div class="card">
+              <img src="{{ url_for('static', filename='img/alter.png')}}" width="150px" alt="" />
+              <br /><br />
+
+              <h2>Alternative</h2>
+              <br /><br />
+
+              <p>
+                If you seek an alternative to an AI-based medicine detection
+                system using images, consider using barcode or QR code scanning
+                apps. These apps can scan the barcode or QR code on medication
+                packaging to provide information. While not as advanced as image
+                recognition, this method can still be a useful way to retrieve
+                accurate medication information.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+</body>
+<script>
+    var loader = document.getElementById("preloader");
+      setTimeout(function(){
+        loader.style.display = "none";
+      }, timeout=2000);
+</script>
+</html>
