@@ -64,4 +64,4 @@ def image_with_bboxes(frame: Union[Path, cv2.Mat], face_data: List[dict]) -> cv2
 
     return image
 
-pprint(predict_pill("PharmaVision-master\\uploads\\eliquis.jpg"), indent=4)
+#pprint(predict_pill("PharmaVision-master\\uploads\\eliquis.jpg"), indent=4)
