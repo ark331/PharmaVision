@@ -51,7 +51,7 @@
             </div><br>
             <div class="search-cont">
               <input type="text" placeholder="Search..." class="search-in" id="search-input">
-              <button class="search-button" onclick="" >
+              <button class="search-button" action="resultDialog" >
                   <img src="{{url_for('static',filename='/img/search.png')}}" alt="Search">
               </button>
               
@@ -72,8 +72,25 @@
               <button type="submit" id="uploadButton" action="/upload" disabled>Upload</button>
               <button id="clearButton" type="button" disabled>Clear</button>
             </div>
-            </form>
-</body>
+ 
+          </form>
+          <dialog id="resultDialog">
+            <h2>Search Results</h2>
+            <p>Your search for "<span id="searchTerm"></span>" returned the following results:</p>
+            <ul id="searchResultsList">
+              <!-- Search results will be dynamically added here -->
+            </ul>
+            <button id="closeDialogButton">Close</button>
+          </dialog>
+
+          <dialog id="errorDialog">
+            <h3>No result found</h3><br>
+            <i>Please enter proper drug name</i><br>
+            <button id="errorClose">Close</button>
+          </dialog>
+          
+        </body>
+
 
 <script>
     var loader = document.getElementById("preloader");
@@ -119,6 +136,7 @@
         }
     });
 
+
     suggestionsList.addEventListener("click", (e) => {
         if (e.target.tagName === "LI") {
             searchInput.value = e.target.textContent;  // Fill input with clicked suggestion
@@ -127,19 +145,18 @@
     });
 
     const resultsContainer = document.getElementById('results');
-
     
     // Drag 
     const dropzone = document.getElementById('dropzone');
-const fileInput = document.getElementById('fileInput');
-const fileList = document.getElementById('fileList');
-const filePreviews = document.getElementById('filePreviews');
-const uploadButton = document.getElementById('uploadButton');
-const clearButton = document.getElementById('clearButton');
-
-dropzone.addEventListener('click', () => {
-  fileInput.click();
-});
+    const fileList = document.getElementById('fileList');
+    const filePreviews = document.getElementById('filePreviews');
+    const fileInput = document.getElementById('fileInput');
+    const clearButton = document.getElementById('clearButton');
+    const uploadButton = document.getElementById('uploadButton');
+    
+    dropzone.addEventListener('click', () => {
+      fileInput.click();
+    });
 
 fileInput.addEventListener('change', (event) => {
   handleFiles(event.target.files);
@@ -213,6 +230,71 @@ uploadButton.addEventListener('click', () => {
 
 
       
+// Get references to elements
+const searchButton = document.querySelector('.search-button');
+const resultDialog = document.getElementById('resultDialog');
+const searchTermElement = document.getElementById('searchTerm');
+const searchResultsList = document.getElementById('searchResultsList');
+const closeDialogButton = document.getElementById('closeDialogButton');
+
+// Function to generate search results and show the dialog
+searchButton.addEventListener('click', () => {
+    const searchQuery = searchInput.value.trim();
+    
+    // If there is input, display the dialog
+    if (searchQuery !== "") {
+        // Set the search term in the dialog
+        searchTermElement.textContent = searchQuery; 
+        
+        // Clear previous results in the dialog
+        searchResultsList.innerHTML = ''; 
+        
+        // Dynamically generate the list of matching results
+        let resultsFound = false;
+        drugNames.forEach(drug => {
+            if (drug.toLowerCase().includes(searchQuery.toLowerCase())) {
+                const listItem = document.createElement('li');
+                listItem.textContent = drug;
+                searchResultsList.appendChild(listItem);
+                resultsFound = true;
+            }
+        });
+        
+        // If no results found, show a message
+        if (!resultsFound) {
+            const noResultItem = document.createElement('li');
+            noResultItem.textContent = "No matching results found.";
+            searchResultsList.appendChild(noResultItem);
+        }
+        
+        // Show the dialog
+        resultDialog.showModal();
+    } else {
+        // If no search query is provided, you can choose to display an error or nothing
+        errorDialog.showModal()
+    }
+});
+    
+
+
+
+
+// Close the dialog when clicking the close button
+closeDialogButton.addEventListener('click', () => {
+    resultDialog.close();
+});
+
+errorClose.addEventListener('click' ,()=>{
+  errorDialog.close();
+});
+
+// Optional: Close the dialog when clicking outside of it
+resultDialog.addEventListener('click', (event) => {
+    if (event.target === resultDialog) {
+        resultDialog.close();
+    }
+});
 
 </script>
 </html>
+
