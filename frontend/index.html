@@ -2,13 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PharmaVision | Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles.css') }}"/>
+    <link rel="script" href="{{ url_for('static', filename='/main.js') }}">
+    <link rel="icon" href="{{url_for('static', filename='img/Header.png')}}" type="image/x-icon">
+
+
   </head>
 
   <body>  
+    <div id="preloader"></div>
+
     <div class="hero">
       <div class="navbar-box">
         <nav class="navbar">
@@ -16,15 +22,16 @@
             <a href="#">PharmaVision</a>
           </div>
           <div class="navlinks">
-            <a href="#" class="navlink">Home</a>
-            <a href="#" class="navlink">About Us</a>
-            <a href="#" class="navlink">Products</a>
-            <a href="#" class="navlink">Contact</a>
+            <a href="/index" class="navlink">Home</a>
+            <a href="/about" class="navlink">About Us</a>
+            <a href="/product" class="navlink">Products</a>
+            <a href="/contact" class="navlink">Contact</a>
+            <a href="/model" class="navlink">Model</a>
           </div>
 
-          <div>
-            <button class="nav-button">Sign Up / Login</button>
-          </div>
+          <!-- <div>
+            <button class="nav-button" onclick="openDialog()">Upload</button>
+          </div> -->
         </nav>
       </div>
 
@@ -39,146 +46,42 @@
             medication safety and improving healthcare experiences.
           </p>
           <br />
+          <br>
           <div class="headButton">
             <div class="links">
-              <a href="">Know Us</a>
+              <a href="/about">Know Us</a>
             </div>
             <div class="links">
-              <a href="">Try Now</a>
+              <a href="/model">Try Now</a>
             </div>
           </div>
         </div>
         <div class="headerFlexx">
-          <img src="{{ url_for('static', filename='img/logo1.png')}}" width="400px" alt="" />
+          <img src="{{ url_for('static', filename='img/logo1.png')}}" alt="doctor" />
         </div>
       </div>
 
-      <div class="page2">
-        <div class="services">
-          <h1>Product Features</h1>
-          <br /><br />
-
-          <div class="serviceCards">
-            <div class="card">
-              <img src="{{ url_for('static', filename='img/detection.png')}}" width="100px" alt="" />
-              <br /><br />
-
-              <h2>Detection</h2>
-              <br /><br />
-              <p>
-                AI can help detect and diagnose diseases like cancer,
-                cardiovascular issues, respiratory conditions, neurological
-                disorders, and infectious diseases by analyzing medical images
-                and patient data. However, it's crucial to remember that AI is a
-                supportive tool for healthcare professionals and should not
-                replace proper medical diagnosis. Consultation with a qualified
-                healthcare provider is essential for accurate diagnosis and
-                treatment.
-              </p>
-            </div>
-            <div class="card">
-              <img src="{{ url_for('static', filename='img/side-effect.png')}}" width="250px" alt="" />
-              <br /><br />
-              <h2>Side Effects</h2>
-              <br /><br />
-
-              <p>
-                The advanced medicine detection and information retrieval
-                system, being technology-based, doesn't have inherent side
-                effects. However, it's crucial to recognize that any medication
-                identified by the system may have its own potential side
-                effects, specific to that medication. For accurate information
-                on side effects, it is advisable to consult with a healthcare
-                professional or refer to the medication's official
-                documentation.
-              </p>
-            </div>
-            <div class="card">
-              <img src="{{ url_for('static', filename='img/alter.png')}}" width="150px" alt="" />
-              <br /><br />
-
-              <h2>Alternative</h2>
-              <br /><br />
-
-              <p>
-                If you seek an alternative to an AI-based medicine detection
-                system using images, consider using barcode or QR code scanning
-                apps. These apps can scan the barcode or QR code on medication
-                packaging to provide information. While not as advanced as image
-                recognition, this method can still be a useful way to retrieve
-                accurate medication information.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <br /><br />
       <br /><br />
-      <div class="page3">
-        <br /><br />
-
-        <div class="checkup">
-          <div class="check">
-            <img src="{{ url_for('static', filename='img/page3.png')}}'" alt="" />
-          </div>
-          <div class="check">
-            <h1>Medicine Checkup</h1>
+      
             <br />
-
-            <h2>✪ Let Us Take Care Of Your Medicine ✪</h2>
-            <br />
-            <p>
-              Experience hassle-free medication management with our dedicated
-              services. Let us handle your medicines, ensuring you receive the
-              care and attention your health deserves.
-            </p>
-            <br />
-            <div class="checkLinks">
-              <div class="checkbutton">
-                <button id="openDialogBtn">Let's Start</button>
-
-                <div id="dialog" class="dialog">
-                  <div class="dialog-content">
-                    <span class="close" onclick="closeDialog()">&times;</span>
-                    <br />
-                    <h3>Upload Your Medicine Picture Below</h3>
-                    <br /><br />
-                    <div class="file-input-container">
-                      <input type="file" id="fileInput" class="custom-file-input" />
-                      <label for="fileInput" class="custom-file-label">
-                        <span>Choose File</span>
-                        <button id="uploadBtn" type="button">Upload</button>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div> 
-              <div class="checkbutton">
-                <a href="">Read More ↠</a>
-              </div>
-            </div>
+            
+            
+            
+          
           </div>
         </div>
       </div>
 
-
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
 
     <script>
+      var loader = document.getElementById("preloader");
+      setTimeout(function(){
+        loader.style.display = "none";
+      }, timeout=2000);
+
       document.getElementById("openDialogBtn").addEventListener("click", openDialog);
 
       function openDialog() {
@@ -219,6 +122,59 @@
               alert('Please choose a file before clicking Upload.');
           }
       });
-  </script>
+
+      // Search list
+      const drugNames = [
+            "Aspirin", "Ibuprofen", "Paracetamol", "Metformin", "Amoxicillin", 
+            "Atorvastatin", "Lisinopril", "Levothyroxine", "Azithromycin", 
+            "Hydrochlorothiazide", "Amlodipine", "Simvastatin", "Albuterol", 
+            "Metoprolol", "Omeprazole"
+          ];
+
+const searchInput = document.getElementById('search-input');
+const suggestionsList = document.getElementById('suggestions-list');
+
+const fetchSuggestions = async (query) => {
+            try {
+                const response = await fetch(`https://drugs.com/search.php?searchterm=${query}`);
+                const data = await response.json();
+                return data; // Assuming the API returns an array of drug names
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return [];
+            }
+        };
+
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.toLowerCase();
+
+            if (query) {
+                const matchingDrugs = await fetchSuggestions(query);
+                suggestionsList.innerHTML = matchingDrugs.map(drug => `<li>${drug}</li>`).join('');
+                suggestionsList.style.display = matchingDrugs.length ? 'block' : 'none';
+            } else {
+                suggestionsList.style.display = 'none';
+            }
+        });
+
+        suggestionsList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                searchInput.value = e.target.textContent;
+                suggestionsList.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                suggestionsList.style.display = 'none';
+            }
+        });
+
+        
+    </script>
+
+      
     </body>
+
+    
 </html>
